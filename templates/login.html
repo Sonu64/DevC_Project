@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap"
+      rel="stylesheet"
+    />
+    <!-- <link rel="stylesheet" href="style/style-login.css" /> -->
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Montserrat", sans-serif;
+      }
+
+      body {
+        min-height: 100vh;
+        width: 100vw;
+        scroll-behavior: smooth;
+        overflow-x: hidden;
+      }
+
+      .body {
+        position: relative;
+        /* position: absolute; */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        width: 100%;
+        background-color: #8ec5fc;
+        background-image: linear-gradient(62deg, #96c7f7 0%, #cca2f3 100%);
+      }
+      .hidden {
+        opacity: 0;
+        transition: all 1s;
+        filter: blur(5px);
+        transform: translateX(-100%);
+      }
+      .show {
+        opacity: 1;
+        filter: blur(0);
+        transform: translateX(0);
+      }
+
+      header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        padding: 15px 25px;
+        background: transparent;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        backdrop-filter: blur(30px);
+        /* z-index: 99; */
+      }
+
+      .logo {
+        font-family: "Times New Roman";
+        color: #fff;
+        user-select: none;
+      }
+      .bar{
+        display: none;
+      }
+      .close{
+        display: none;
+      }
+
+      .navigation {
+        display: flex;
+        align-items: center;
+      }
+
+      .navigation a {
+        cursor: pointer;
+        color: rgb(255, 255, 255);
+        padding: 8px 8px;
+        text-decoration: none;
+        margin: 0 10px;
+        position: relative;
+        backdrop-filter: blur(1120px);
+        border-radius: 5px;
+        /* background-color: red; */
+        color: rgb(88, 9, 9);
+        /* padding: 20px 30px; */
+      }
+
+      .navigation a::after {
+        content: "";
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        transition: all 0.4s;
+        transform-origin: left;
+        box-sizing: border-box;
+        bottom: 0%;
+        right: 0;
+        border-bottom: 2px solid black;
+        border-right: 2px solid black;
+        border-radius: 20px;
+      }
+      .navigation a::before {
+        content: "";
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        transition: all 0.3s;
+        transform-origin: left;
+        box-sizing: border-box;
+        top: 0%;
+        left: 0;
+        border-top: 2px solid black;
+        border-left: 2px solid black;
+        border-radius: 20px;
+      }
+
+      a:hover::before,
+      a:hover:after {
+        width: 10%;
+        height: 20%;
+      }
+      .navigation a:nth-child(2) {
+        transition-delay: 400ms;
+      }
+      .navigation a:nth-child(3) {
+        transition-delay: 600ms;
+      }
+      .navigation a:nth-child(4) {
+        transition-delay: 800ms;
+      }
+
+      .navigation .btnLogin-popup:hover {
+        background: #fff;
+        color: black;
+      }
+
+      .leftNav {
+        align-items: center;
+        margin: 5px;
+        height: 72px;
+        width: 72px;
+        display: flex;
+        border-radius: 50%;
+      }
+
+      .leftNav img {
+        height: 70px;
+        width: 70px;
+        border-radius: 50%;
+      }
+
+      .logoname {
+        position: absolute;
+        left: 120px;
+        /* background: blue; */
+        text-transform: uppercase;
+        font-size: 25px;
+        border-radius: 50%;
+      }
+
+      .logoname h3 {
+        text-shadow: 1px 5px 10px black;
+        user-select: none;
+        color: rgb(202, 9, 19);
+      }
+
+      .btn {
+        margin-top: 10px;
+        width: 100%;
+        height: 45px;
+        background: #ed3d11;
+        border: none;
+        outline: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 1em;
+        color: #fff;
+        font-weight: 500;
+      }
+
+      .login-register {
+        font-size: 0.9em;
+        color: #ed3d11;
+        text-align: center;
+        font-weight: 500;
+        margin: 22px 0 10px;
+      }
+
+      /* content  */
+
+      .mid {
+        padding: 50px;
+      }
+      .mid h2 {
+        text-align: center;
+        font-size: 37px;
+        padding: 10px;
+        color: #fff;
+      }
+      .mid p {
+        font-size: 20px;
+        padding-left: 50px;
+        padding-right: 50px;
+        color: #fff;
+      }
+
+      .subContent {
+        position: absolute;
+        /* width: 100%;
+ height: 100vh; */
+        right: 10%;
+        bottom: 10%;
+        list-style: none;
+      }
+
+      .subContent h2 {
+        text-transform: uppercase;
+        padding: 10px;
+        padding-right: 50px;
+        clip-path: polygon(100% 0, 100% 0, 75% 100%, 0% 100%, 0 48%, 0% 0%);
+        color: #8c0c0c;
+        border-radius: 5px;
+        width: max-content;
+        backdrop-filter: blur(30px);
+      }
+      .subContent a {
+        text-decoration: none;
+        color: #162938;
+      }
+
+      .subContent button {
+        cursor: pointer;
+        padding: 7px 10px;
+        font-size: 20px;
+        background-color: #d76060;
+        /* transition: 1s; */
+        border: none;
+        border-radius: 5px;
+        margin-top: 5px;
+        font-weight: 400;
+      }
+
+      .subContent button:hover {
+        background: #777;
+        backdrop-filter: blur(20px);
+      }
+
+      .subContent button:hover a {
+        color: white;
+      }
+
+      /* container1  */
+      #services {
+        width: 98%;
+        height: 80vh;
+      }
+      #services .works {
+        margin: 5px;
+        border: 2px solid grey;
+        padding: 30px;
+        border-radius: 30px;
+        box-shadow: 2px 5px 5px #162938;
+      }
+      #services .works h4 {
+        padding: 10px;
+      }
+      #services .works ul {
+        list-style: none;
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+      }
+      #services .works ul li {
+        border: 2px solid grey;
+        padding: 5px;
+        border-radius: 30px;
+      }
+      #services .works ul li a {
+        text-decoration: none;
+      }
+      #services h2 {
+        padding: 30px;
+      }
+      #services .ulli {
+        padding: 30px;
+        /* list-style: none; */
+      }
+      #services .ulli li {
+        padding: 8px;
+      }
+
+      /* footer  */
+
+      .footer {
+        color: #fff;
+        padding: 30px;
+        width: 100%;
+        height: 200px;
+        background: rgb(24, 24, 24);
+        display: flex;
+        flex-basis: auto;
+      }
+      .footer1 {
+        padding: 10px;
+        flex-basis: 33%;
+      }
+      .footer2 {
+        flex-basis: 33%;
+        padding: 10px;
+      }
+      .footer3 {
+        flex-basis: 33%;
+        padding: 10px;
+      }
+      .footer3 h4 {
+        margin: 5px;
+      }
+      .footer3 input {
+        background: transparent;
+        margin: 5px;
+        border-radius: 30px;
+        outline: none;
+        border: 2px solid #fff;
+        padding: 5px;
+        text-align: center;
+      }
+      .footer3 input ::placeholder {
+        color: #fff;
+        font-size: 28px;
+      }
+      .footerbottom {
+        text-align: center;
+        background-color: #162938;
+        color: #fff;
+        font-size: 18px;
+        padding: 10px;
+      }
+      h2 {
+        text-decoration: none;
+      }
+
+      .comp a {
+        padding: 30px 10px;
+        transition: 0.2s ease;
+        font-weight: bold;
+        color: brown;
+        flex-wrap: wrap;
+      }
+      .comp a:hover {
+        color: rgb(255, 0, 0);
+      }
+
+      @media (max-width: 860px) {
+        header {
+          align-items: center;
+        }
+
+        .navigation .close {
+          display: block;
+          top: 5px;
+          left: 5px;
+          position: absolute;
+          cursor: pointer;
+          color: white;
+          font-size: large;
+          font-size: 1.6em;
+        }
+        .navigation .close:hover {
+          background: #899197;
+          border-radius: 50%;
+        }
+        .navigation a {
+          top: 50px;
+
+          margin-bottom: 30px;
+          position: relative;
+          font-size: 1em;
+          margin-left: 20px;
+          margin-right: 20px;
+          display: block;
+        }
+
+        .navbar {
+          position: absolute;
+          top: 0;
+          right: 0;
+          height: 100vh;
+          width: 200px;
+          background: #162938;
+          display: block;
+          align-items: center;
+          padding: 10px;
+          text-align: center;
+          /* display: none; */
+          transform: translateX(300px);
+          z-index: 101;
+          transition: 1s;
+        }
+        .navbar.shiftRight {
+          transform: translateX(0px);
+        }
+        .bar {
+          cursor: pointer;
+          font-size: 40px;
+          display: block;
+          color: white;
+          padding: 10px;
+        }
+        .mid {
+          padding: 6px;
+        }
+        .subContent {
+          display: none;
+        }
+        .mid h2 {
+          padding-top: 130px;
+        }
+      }
+      @media (max-width: 600px) {
+        .logoname {
+          display: none;
+        }
+        .mid {
+          height: fit-content;
+        }
+        .mid .p {
+          display: none;
+        }
+        .footer {
+          padding: 5px;
+        }
+        #services {
+          width: 98%;
+          height: fit-content;
+        }
+        .mid h3{
+            display: none;
+        }
+        .mid .sec{
+            display: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="body">
+      <header>
+        <div class="leftNav">
+          <a href="#"><img src="https://i.ibb.co/T0C80pG/logo.png" alt="logo" border="0" /></a>
+          <div class="logoname">
+            <h3>Social Pulse</h3>
+          </div>
+        </div>
+        <nav class="navigation">
+          <div class="navbar">
+            <span
+              ><ion-icon name="close-outline" class="close closeNav"></ion-icon
+            ></span>
+            <a href="/premium" style="padding: 10px 20px;font-weight: bold;color:yellow;">Premium</a>
+            <a href="/contact" style="padding: 10px 20px;font-weight: bold;color:yellow;">Contact </a>
+            <a href="/logout" class="btnLogout" style="font-weight: bold;color:red;padding: 10px 20px;">LogOut</a>
+          </div>
+
+          <span
+            ><ion-icon name="menu-outline" class="bar OpenNav"></ion-icon
+          ></span>
+        </nav>
+      </header>
+
+      <!-- content  -->
+      <div class="mid">
+        <h2 style="color: black; font-weight: 800; margin-bottom: 30px">
+          You know why Digital marketing matters ?
+        </h2>
+        <p style="color: black">
+          If you are not using digital marketing services for your business yet,
+          you might as well be advertising via a carrier pigeon! Jokes aside,
+          digital marketing today is no longer optional, it’s a necessity. If
+          you want to reach a specific demographic, if you want to rank higher
+          in search engine results, if you want to generate those much-needed
+          leads and if you want to be seen and heard on world wide web – digital
+          marketing is your only bet!
+        </p>
+        <h3 style="margin-left: 60px; margin-top: 50px">Why We ?</h3>
+        <div class="sec">
+        <p style="margin-left: 49px" class="sec">
+          <li style="margin-left: 49px">
+            Top Talent - We hire, develop, & retain top marketing talent so they
+            can bring game-changing magic to our client’s accounts to help them
+            reach their goals, make a positive impact on the world, and claim
+            the leading edge in their industries!
+          </li>
+          <li style="margin-left: 49px">
+            Limited Client Count - We’re long-term growth partners with our
+            clients; we limit our client count to ensure we only work with great
+            companies.
+          </li>
+        </p>
+    </div>
+      </div>
+    </div>
+    <!-- container1  -->
+    <div id="services" style="margin-top: 50px;margin-left: 20px;">
+      <div class="works">
+        <h4>We are specializes in marketing in the following areas:</h4>
+        <div class="comp">
+          <ul>
+            <li><a href="https://facebook.com" target="_blank">FaceBook</a></li>
+            <li>
+              <a href="https://instagram.com" target="_blank">Instagram</a>
+            </li>
+            <li><a href="https://linkedin.com" target="_blank">LinkedIn</a></li>
+            <li><a href="https://twitter.com" target="_blank">Twitter</a></li>
+            <li><a href="https://youtube.com" target="_blank">YouTube</a></li>
+            <li><a href="https://tinder.com" target="_blank">Tinder</a></li>
+          </ul>
+        </div>
+      </div>
+      <h2>Services</h2>
+      <ul class="ulli" style="margin-left: 20px;">
+        <li class="hidden">Content Creation</li>
+        <li class="hidden">Email Management</li>
+        <li class="hidden">Social Media Management</li>
+        <li class="hidden">Facebook and Instagram Advertising</li>
+        <li class="hidden">Google Ads Management</li>
+        <li class="hidden">Website optimization</li>
+      </ul>
+      <h3 style="margin-left: 20px;">Upcoming...</h3>
+      <ul class="ulli">
+        <li class="hidden" style="margin-left: 20px;">Management Courses</li>
+        <li class="hidden" style="margin-left: 20px;">SEM (Search Engine Marketing)</li>
+      </ul>
+    </div>
+    <!-- container2  -->
+    <div class="container2"></div>
+
+    <div class="footer">
+      <div class="footer1 hidden">
+        <h3>Creators</h3>
+        <span class="one">
+          <h4>Bimlesh Kumar</h4>
+          <div class="icon">
+            <ion-icon name="logo-instagram"></ion-icon>
+            <ion-icon name="logo-linkedin"></ion-icon>
+            <ion-icon name="logo-facebook"></ion-icon>
+          </div>
+        </span>
+        <span class="two">
+          <h4>Sourakanti Mandal</h4>
+          <div class="icon">
+            <ion-icon name="logo-instagram"></ion-icon>
+            <ion-icon name="logo-linkedin"></ion-icon>
+            <ion-icon name="logo-facebook"></ion-icon>
+          </div>
+        </span>
+      </div>
+      <div class="footer2 hidden">
+        <h3>Support</h3>
+        <h5>Contact Us</h5>
+        <h5>FAQ</h5>
+      </div>
+    </div>
+    <div class="footerbottom">
+      <p>CopyRight &copy; All Rights Are Reserved 2023</p>
+    </div>
+
+    <script>
+      const hidddenElement = document.querySelectorAll(".hidden");
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("show");
+          } else {
+            entry.target.classList.remove("show");
+          }
+        });
+      });
+      hidddenElement.forEach((el) => observer.observe(el));
+
+      const navbar = document.querySelector(".navbar");
+      const closeNav = document.querySelector(".closeNav");
+      const openNav = document.querySelector(".OpenNav");
+
+      closeNav.addEventListener("click", () => {
+        navbar.classList.remove("shiftRight");
+      });
+      openNav.addEventListener("click", () => {
+        navbar.classList.add("shiftRight");
+      });
+    </script>
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"
+    ></script>
+  </body>
+</html>

@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <!-- <link rel="stylesheet" href="style/style.css" /> -->
+      <style>
+          * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+}
+
+body{
+
+    min-height: 100vh;
+    width: 100vw;
+    scroll-behavior: smooth;
+   overflow-x: hidden;
+}
+
+.body {
+    position: relative;
+    /* position: absolute; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100%;
+    background-color: #D9AFD9;
+background-image: linear-gradient(0deg, #D9AFD9 0%, #97D9E1 100%);
+
+}
+.hidden{
+    opacity: 0;
+    transition: all 1s;
+    filter:  blur(5px);
+    transform:  translateX(-100%);
+}
+.show{
+opacity: 1;
+filter: blur(0);
+transform:  translateX(0);
+
+}
+
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px 25px;
+    background: transparent;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    backdrop-filter: blur(30px);
+    z-index: 99;
+}
+
+.logo {
+    font-family: 'Times New Roman';
+    color: #fff;
+    user-select: none;
+
+}
+
+.navigation {
+    display: flex;
+    align-items: center;
+}
+
+.navigation a {
+
+    cursor: pointer;
+    color: rgb(255, 255, 255);
+    padding: 3px 3px;
+    text-decoration: none;
+    /* margin: 0 5px; */
+    position: relative;
+ backdrop-filter: blur(1120px);
+ border-radius: 20px;
+
+
+}
+
+.navigation a::after {
+    content: "";
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    transition: all 0.4s;
+    transform-origin: left ;
+    box-sizing: border-box;
+    bottom: 0%;
+    right: 0;
+    border-bottom: 2px solid black;
+    border-right: 2px solid black;
+    border-radius: 20px;
+}
+.navigation a::before {
+    content: "";
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    transition: all 0.3s;
+    transform-origin:  left;
+    box-sizing: border-box;
+    top: 0%;
+    left: 0;
+    border-top: 2px solid black;
+    border-left:2px solid black;
+    border-radius: 20px;
+}
+
+ a:hover::before,
+ a:hover:after {
+    width: 10%;
+    height: 20%;
+}
+.navigation a:nth-child(2){
+    transition-delay: 400ms;
+}
+.navigation a:nth-child(3){
+    transition-delay: 600ms;
+}
+.navigation a:nth-child(4){
+    transition-delay: 800ms;
+}
+.navigation .btnLogin-popup {
+
+    padding: 20px 35px;
+    background: transparent;
+    /* border: 2px solid #fff; */
+    border: none;
+    outline: none;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.1em;
+    color: black;
+    font-weight: 400;
+    margin-left: 20px;
+    transition: 0.5s;
+    font-size: 20px;
+    box-shadow: 1px 2px 5px rgb(85, 31, 31);
+    font-weight: bold;
+
+}
+
+
+.navigation .btnLogin-popup:hover {
+    background: #fff;
+    color: black;
+}
+
+.leftNav {
+    align-items: center;
+    margin: 5px;
+    height: 72px;
+    width: 72px;
+    display: flex;
+   border-radius: 50%;
+
+}
+
+.leftNav img {
+    height: 70px;
+    width: 70px;
+   border-radius: 50%;
+}
+
+.logoname {
+    position: absolute;
+    left: 120px;
+    /* background: blue; */
+    text-transform: uppercase;
+    font-size: 25px;
+    border-radius: 50%;
+}
+
+.logoname h3 {
+    text-shadow: 1px 5px 10px black;
+    user-select: none;
+    color: rgb(202, 9, 19);
+}
+
+.wrapper {
+    position: relative;
+    width: 400px;
+    height: 440px;
+    /* background: transparent; */
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    border-radius: 20px;
+    backdrop-filter: blur(215px);
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    transform: scale(0);
+    transition: transform 0.5s ease, height 0.2s ease;
+}
+
+.wrapper.active-popup {
+    transform: scale(1);
+}
+
+.wrapper.active {
+    height: 520px;
+}
+
+.wrapper .form-box {
+    width: 100%;
+    padding: 40px;
+}
+
+.wrapper .form-box.login {
+    transition: transform .18s ease;
+    transform: translateX(0);
+}
+
+.wrapper.active .form-box.login {
+    transition: none;
+    transform: translateX(-400px);
+}
+
+.wrapper .form-box.register {
+    position: absolute;
+    transition: none;
+    transform: translateX(400px);
+}
+
+.wrapper.active .form-box.register {
+    transition: transform .18s ease;
+    transform: translateX(0);
+}
+
+.wrapper .icon-close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 45px;
+    height: 45px;
+    background: #162938;
+    font-size: 2em;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom-left-radius: 20px;
+    cursor: pointer;
+    z-index: 1;
+}
+
+.form-box h2 {
+    font-size: 2em;
+    color: #40a1eb;
+    text-align: center;
+}
+
+.input-box {
+    position: relative;
+    width: 100%;
+    height: 50px;
+    border-bottom: 2px solid #162938;
+    margin: 30px 0;
+}
+
+.input-box label {
+    position: absolute;
+    top: 50%;
+    left: 5px;
+    transform: translateY(-50%);
+    font-size: 15px;
+    color: #ed3d11;
+    font-weight: 500;
+    pointer-events: none;
+}
+
+.input-box input:focus~label,
+.input-box input:valid~label {
+    top: -5px;
+    transition: 0.5s ease-out;
+}
+
+.input-box input {
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    font-size: 1em;
+    color: #ed3d11;
+    font-weight: 600;
+    padding: 0 35px 0 5px;
+}
+
+.input-box .icon {
+    position: absolute;
+    right: 8px;
+    font-size: 1.5em;
+    color: #1394f7;
+    line-height: 57px;
+}
+
+.remember-forgot {
+    font-size: 1.2em;
+    color: #ed3d11;
+    font-weight: 500;
+    margin: -15px 0 15px;
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.remember-forgot label input {
+    accent-color: #162938;
+    margin-right: 3px;
+}
+
+.remember-forgot a {
+    color: #ed3d11;
+    text-decoration: none;
+}
+
+.remember-forgot a:hover {
+    text-decoration: underline;
+}
+
+.btn {
+    margin-top: 10px;
+    width: 100%;
+    height: 45px;
+    background: #ed3d11;
+    border: none;
+    outline: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1em;
+    color: #fff;
+    font-weight: 500;
+
+}
+
+.login-register {
+    font-size: 0.9em;
+    color: #ed3d11;
+    text-align: center;
+    font-weight: 500;
+    margin: 22px 0 10px;
+
+}
+
+.login-register p a {
+    font-size: 1.2em;
+    color: #ed3d11;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.login-register p a:hover {
+    text-decoration: underline;
+}
+
+.close {
+    display: none;
+}
+
+.bar {
+    display: none;
+}
+
+
+
+
+/* content  */
+
+
+ .content {
+     /* margin-top: 120px;  */
+     position: absolute;
+    text-align: center;
+    padding: 20px;
+     top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: larger;
+    z-index: 1;
+    scale: (1);
+
+}
+
+.content.deactive {
+ display: none;
+
+}
+
+.content h1 {
+    padding: 10px;
+    margin: 10px;
+    text-transform: uppercase;
+    color: #8c0c0c;
+    margin-bottom: 20px;
+    text-shadow: 5px 10px 7px black;
+    font-size: 50px;
+    border-radius: 10px;
+    /* background: #d76060; */
+    height: 60px;
+}
+
+.content .content-img {
+    /* position: absolute; */
+    top: -230px;
+
+    background: url(/img/2.png);
+    width: 250px;
+    height: 250px;
+    background-position: center;
+    background-size: cover;
+    border: 2px solid grey;
+    border-radius: 50%;
+
+}
+
+.content p {
+    font-weight: 300;
+    font-size: 50px;
+    color: rgb(6, 21, 27);
+}
+
+.subContent {
+    position: absolute;
+    /* width: 100%;
+ height: 100vh; */
+    right: 10%;
+    bottom: 10%;
+    list-style: none;
+}
+
+.subContent h2 {
+    text-transform: uppercase;
+    padding: 10px;
+    padding-right: 50px;
+    clip-path: polygon(100% 0, 100% 0, 75% 100%, 0% 100%, 0 48%, 0% 0%);
+    color: #8c0c0c;
+    border-radius: 5px;
+    width: max-content;
+    backdrop-filter: blur(30px);
+}
+.subContent a{
+    text-decoration: none;
+    color: #162938;
+}
+
+.subContent button {
+
+    cursor: pointer;
+    padding: 7px 10px;
+    font-size: 20px;
+    background-color: #d76060;
+    /* transition: 1s; */
+    border: none;
+    border-radius: 5px;
+    margin-top: 5px;
+    font-weight: 400;
+}
+
+.subContent button:hover {
+    background: #777;
+    backdrop-filter: blur(20px);
+
+}
+
+.subContent button:hover a {
+    color: white;
+}
+
+
+
+
+
+
+
+
+
+/* footer  */
+
+.footer{
+    color: #fff;
+    padding: 30px;
+    width: 100%;
+    height: 200px;
+    background: rgb(24, 24, 24);
+    display: flex;
+    flex-basis: auto;
+  
+}
+.footer1{
+  padding: 10px;
+    flex-basis: 33%;
+}
+.footer1 h3{
+    padding: 8px;
+}
+.footer1 .icon{
+  
+    display: flex;
+    font-size: larger;
+}
+.footer1 .icon .fo{
+    margin: 5px;
+    padding-right: 5px;
+}
+.footer1 .icon .fo:hover{
+    color: #d76060;
+}
+.footer2{
+    flex-basis: 33%;
+    padding: 10px;
+    
+}
+.footer2 h3, .footer2 h5{
+    cursor: pointer;
+    padding: 5px;
+}
+.footer3{
+    flex-basis: 33%;
+    padding: 10px;
+   
+}
+.footer3 h4{
+    margin: 5px;
+}
+.footer3 input{
+    background: transparent;
+    margin: 5px;
+    border-radius: 30px;
+    outline: none;
+    border: 2px solid #fff;
+    padding: 5px;
+    
+}
+.footer3 input ::placeholder{
+    color: #fff;
+    font-size: 28px;
+}
+.footer3 .btn{
+    padding: 5px;
+    height: fit-content;
+    width: fit-content;
+}
+.footerbottom{
+    text-align: center;
+    background-color: #162938;
+    color: #fff;
+    font-size: 18px;
+    padding: 10px;
+}
+@media(max-width:860px) {
+
+.navigation .close {
+    display: block;
+    top: 5px;
+    left: 5px;
+    position: absolute;
+    cursor: pointer;
+    color: white;
+    font-size: large;
+    font-size: 1.6em;
+
+}
+.navigation .close:hover{
+    background: #899197;
+    border-radius: 50%;
+}
+.navigation a {
+
+    top: 50px;
+
+    margin-bottom: 30px;
+    position: relative;
+    font-size: 1em;
+    margin-left: 20px;
+    margin-right: 20px;
+    display: block;
+
+
+}
+
+.navbar {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    width: 200px;
+    background: #0f7acc;
+    display: block;
+    align-items: center;
+    padding: 10px;
+    text-align: center;
+    /* display: none; */
+    transform: translateX(300px);
+    z-index: 1101;
+    transition: 1s;
+}
+.navbar.shiftRight{
+    transform: translateX(0px);
+}
+.bar{
+    cursor: pointer;
+    font-size: 50px;
+    display: block;
+    color: rgb(4, 68, 120);
+    padding: 10px;
+}
+.content h1{
+margin-bottom: 20px;
+}
+
+}
+@media(max-width:600px){
+    .logoname h3{
+        display: none;
+    }
+    .footer{
+        padding: 5px;
+     flex-direction: column;
+     align-items: center;
+     text-align: center;
+        height: fit-content;
+    }
+    .footer1{
+        text-align: center;
+    }
+    .footer1 .icon{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        
+    }
+}
+      </style>
+  </head>
+  <body>
+    <div class="body">
+      <header>
+        <div class="leftNav">
+            <a href="#"><img src="https://i.ibb.co/T0C80pG/logo.png" alt="logo" border="0" /></a>
+          <div class="logoname">
+            <h3>Social Pulse</h3>
+          </div>
+        </div>
+        <nav class="navigation">
+          <div class="navbar">
+            <span
+              ><ion-icon name="close-outline" class="close closeNav"></ion-icon
+            ></span>
+            <a class="hidden" href="/" style="color:black;font-weight: bold;padding: 11px 20px;">Home</a>
+            <a class="hidden" href="/premium" style="color:black;font-weight: bold;padding: 11px 20px;">Premium</a>
+            <a class="hidden" href="/contact" style="color:black;font-weight: bold;padding: 11px 20px;">Contact </a>
+          </div>
+          <button class="btnLogin-popup">Login</button>
+          <span><ion-icon name="menu-outline" class="bar OpenNav"></ion-icon></span>
+        </nav>
+      </header>
+      <div class="wrapper">
+        <span class="icon-close"><ion-icon name="close"></ion-icon></span>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <div class="form-box login">
+          <h2>Login</h2>
+          <form action="/" method="post">
+            <div class="input-box">
+              <span class="icon"><ion-icon name="mail"></ion-icon></span>
+              <input type="email" required id="email" name="email"/>
+              <label>Email</label>
+            </div>
+            <div class="input-box">
+              <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>
+              <input type="password" required id="password" name="password"/>
+              <label>Password</label>
+            </div>
+            <input type="submit" class="btn" name='login'>
+            <div class="login-register">
+              <p>
+                Don't have an account?
+                <a href="#" class="register-link">Register</a>
+              </p>
+            </div>
+          </form>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <div class="form-box register">
+          <h2>Register</h2>
+          <form action="/" method="post">
+            <div class="input-box">
+              <span class="icon"><ion-icon name="mail"></ion-icon></span>
+              <input type="email" required name="email"/>
+              <label>Email</label>
+            </div>
+            <div class="input-box">
+              <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>
+              <input type="password" required name="password"/>
+              <label>Password</label>
+            </div>
+            <input type="submit" class="btn" name='reg'>
+            <div class="login-register">
+              <p>
+                Already have an account?
+                <a href="#" class="login-link">Login</a>
+              </p>
+            </div>
+          </form>
+        </div>
+      </div>
+
+
+
+
+
+
+
+
+
+
+      <!-- content  -->
+
+      <div class="content">
+        <h1 style="color:black;">Social Pulse</h1>
+        <h3 style="margin-top: 50px;font-size:25px;">Login to Explore !</h3>
+      </div>
+
+  
+    </div>
+
+
+    <div class="footer">
+        <div class="footer1 hidden">
+            <h3>Creators</h3>
+           <span class="one">
+            <h4>Bimlesh Kumar</h4>
+            <div class="icon">
+              <ion-icon class="fo" name="logo-instagram"></ion-icon>
+              <ion-icon  class="fo"  name="logo-linkedin"></ion-icon>
+              <ion-icon  class="fo"  name="logo-facebook"></ion-icon>
+            </div>
+           </span>
+           <span class="two">
+            <h4>Sourakanti Mandal</h4>
+            <div class="icon">
+                <ion-icon class="fo" name="logo-instagram"></ion-icon>
+                <ion-icon  class="fo"  name="logo-linkedin"></ion-icon>
+                <ion-icon  class="fo"  name="logo-facebook"></ion-icon>
+            </div>
+           </span>
+        </div>
+        <div class="footer2 hidden">
+           <h3>Support</h3>
+           <h5>Contact Us</h5>
+           <h5>FAQ</h5>
+            
+        </div>
+          <div class="footer3 hidden">
+            <form action="">
+              <h4>Stay Up To Date With Us</h4>
+              <input type="email" name="" id="" placeholder="Email">
+              <button class="btn">Submit</button>
+            </form>
+          </div>
+
+
+    </div>
+    <div class="footerbottom">
+        <p>CopyRight &copy; All Rights Are Reserved 2023</p>
+    </div>
+
+
+    <!-- <script src="script/script.js"></script> -->
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"
+    ></script>
+  </body>
+<script>
+
+
+   const hidddenElement = document.querySelectorAll('.hidden');
+const observer = new IntersectionObserver((entries)=>{
+    entries.forEach((entry)=>{
+        if(entry.isIntersecting){
+            entry.target.classList.add('show');
+        }
+        else{
+            entry.target.classList.remove('show');
+        }
+    }
+    
+    )
+});
+hidddenElement.forEach((el) => observer.observe(el));
+
+const wrapper = document.querySelector('.wrapper');
+const loginLink = document.querySelector('.login-link');
+const registerLink = document.querySelector('.register-link');
+const btnPopup = document.querySelector('.btnLogin-popup');
+const iconClose = document.querySelector('.icon-close');
+const content = document.querySelector('.content');
+
+const navbar = document.querySelector('.navbar');
+const closeNav = document.querySelector('.closeNav');
+const openNav = document.querySelector('.OpenNav');
+
+
+closeNav.addEventListener('click',()=>{
+    navbar.classList.remove('shiftRight');
+
+
+});
+openNav.addEventListener('click',()=>{
+  
+    navbar.classList.add('shiftRight');
+    });
+
+
+registerLink.addEventListener('click',()=>{
+    wrapper.classList.add('active');
+});
+loginLink.addEventListener('click',()=>{
+    wrapper.classList.remove('active');
+    
+});
+btnPopup.addEventListener('click',()=>{
+    wrapper.classList.add('active-popup');
+    content.classList.add('deactive');
+});
+
+iconClose.addEventListener('click',()=>{
+    wrapper.classList.remove('active-popup');
+    content.classList.remove('deactive');
+});
+
+
+
+
+
+
+
+
+
+
+</script>
+</html>
